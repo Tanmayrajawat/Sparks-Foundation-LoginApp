@@ -17,6 +17,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        createloginui()
     }
     fun createloginui(){
         val providers = arrayListOf<AuthUI.IdpConfig>(
@@ -32,12 +33,13 @@ class LoginActivity : AppCompatActivity() {
                 .setTheme(R.style.FirebaseUI_DefaultMaterialTheme).build(), RC_SIGN
         )
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode== RC_SIGN){
-            var response= IdpResponse.fromResultIntent(data)
+            var response=IdpResponse.fromResultIntent(data)
             if (resultCode== Activity.RESULT_OK){
-                val user= FirebaseAuth.getInstance().currentUser
+                val user=FirebaseAuth.getInstance().currentUser
                 //  Log.d("USER_DATA", user?.displayName.toString())
                 startActivity(Intent(this,MainActivity::class.java))
             }
@@ -46,11 +48,11 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                     return
                 }
-                if (response?.error?.errorCode== ErrorCodes.NO_NETWORK){
+                if (response?.error?.errorCode==ErrorCodes.NO_NETWORK){
                     return
                 }
-                if (response?.error?.errorCode== ErrorCodes.UNKNOWN_ERROR){
-                    Toast.makeText(this,response?.error?.errorCode.toString(), Toast.LENGTH_SHORT).show()
+                if (response?.error?.errorCode==ErrorCodes.UNKNOWN_ERROR){
+                    Toast.makeText(this,response?.error?.errorCode.toString(),Toast.LENGTH_SHORT).show()
                     return
                 }
 
